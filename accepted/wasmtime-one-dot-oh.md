@@ -325,6 +325,31 @@ could be pursued beyond just tweaking minor details of the proposal:
   usage of ESR versions we can consider dropping support for them at a later
   date when such a conclusion is made (probably another RFC).
 
+* As currently proposed Wasmtime is guaranteed to receive a new major version
+  every 4 weeks. It might be the case, though, that within those 4 weeks of
+  development that Wasmtime didn't actually have any API-breaking changes occur.
+  Theoretically this could allow for a minor release of the form 2.1.0, for
+  example, if 2.0.0 was the previous release. There are a number of downsides
+  with trying to do this, though, including:
+
+  * Wasmtime developers now have to keep track of breaking changes and determine
+    whether any landed in the 4-week release window.
+  * This makes Wasmtime's versioning less predictable.
+  * ESR is somewhat more murky in this scenario. If it still happens every 5th
+    release we'll have to keep track of what the 5th release is, and if both
+    2.0.0 and 2.5.0 are ESR releases then it's not clear why projects would use
+    2.0.0 as opposed to 2.6.0 if it were the current version (since everything
+    is semver-compatible).
+  * If the `wasmtime` Rust crate didn't have any breaking changes it doesn't
+    mean that the embedding APIs also didn't have any breaking changes (or vice
+    versa too).
+
+  By having a new major version every 4 weeks it's definitely a form of "least
+  common denominator" solution but it also provides a predictable versioning
+  number as well as a clear indication of what is ESR and what isn't. For these
+  reasons it's proposed here to use a new major version every 4 weeks instead of
+  gauging via breaking changes or not.
+
 # Open questions
 [open-questions]: #open-questions
 
