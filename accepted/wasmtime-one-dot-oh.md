@@ -375,3 +375,14 @@ could be pursued beyond just tweaking minor details of the proposal:
 - Are releases skipped/delayed when they correspond to work holidays? For
   example if a release happens to coincide with Christmas should it be delayed?
   Skipped? Perhaps with entirely automated releases this wouldn't matter!
+
+- Will living on an LTS release be annoying to users? For example users may not
+  know that each 5 releases are LTS or they may otherwise get warned by tooling
+  like `cargo outdated` that their dependency is behind-the-times when it's
+  intentionally so. One possibility to solve this would be `wasmtime-lts`
+  packages for all package managers which are versioned independently from the
+  `wasmtime` package (basically the `wasmtime` package divided by 5). In Rust,
+  for example, the crate would simply reexport the `wasmtime` package itself.
+  This would require a `*-lts` release of all Wasmtime crates, though, including
+  those like `wasmtime-wasi` and it's not sure if this would work well from an
+  automation point of view and such.
