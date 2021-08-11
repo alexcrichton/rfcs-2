@@ -147,7 +147,8 @@ them to continue to use the latest-and-greatest Wasmtime. At the same time
 though users should expect that they will not be blindsided by major
 refactorings. For example changes like [Wasmtime's new API][new-api] will still
 go through the RFC process and will be deliberately scheduled and widely
-advertised before they're released.
+advertised before they're released. Note that it is expected that changes of
+that magnitude are expected to be quite rare.
 
 [new-api]: https://github.com/bytecodealliance/rfcs/blob/main/accepted/new-api.md
 
