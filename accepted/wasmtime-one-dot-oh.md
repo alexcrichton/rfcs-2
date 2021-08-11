@@ -188,17 +188,15 @@ users who don't necessarily want to stay up-to-date with the latest and greatest
 of Wasmtime, but still want the stability of a production-ready WebAssembly
 runtime. For these users, this leads well into the next section ...
 
-### Extended Support Releases
+### Long-term Support Releases
 
 Wasmtime will support some releases for an extended period of time relative to
-other releases. These releases will be known as "extended support releases" or
-ESR to take a leaf out of Firefox's book. This is intended to be similar to the
-concept of "long term support" or LTS releases in other projects. **Wasmtime
-will support two active ESR versions at any point in time, each supported for 10
-months at a time**.
+other releases. These releases will be known as "long term support" releases or
+LTS releases. **Wasmtime will support two active LTS versions at any point in
+time, each supported for 10 months at a time**.
 
 For users who want to use Wasmtime but are not interested in upgrading monthly,
-this will be a suitable alternative where Wasmtime ESR versions will have the
+this will be a suitable alternative where Wasmtime LTS versions will have the
 following properties while the version is considered "supported":
 
 * They will receive security fixes.
@@ -206,17 +204,17 @@ following properties while the version is considered "supported":
 * They will _not_ receive new features.
 
 For example if a new WebAssembly proposal is implemented it will not be
-backported to ESR versions. Additionally if a bug is fixed in a wasm proposal
-that is off-by-default in an ESR version it will also not be backported. Other
-bug fixes (and of course security fixes) will be backported to supported ESR
+backported to LTS versions. Additionally if a bug is fixed in a wasm proposal
+that is off-by-default in an LTS version it will also not be backported. Other
+bug fixes (and of course security fixes) will be backported to supported LTS
 versions.
 
-An ESR version is considered "supported" for 10 release cycles, or 40 weeks (~10
-months). Wasmtime will have two ESR versions at any point in time, with a new
-ESR happening every 5 releases (20 weeks, ~5 months). For ease of remembering
-what's an ESR and what isn't, all releases of Wasmtime divisible by 5 will be
-ESR version, with the exception of 1.0 being an ESR version as well. For example
-the ESR versions of Wasmtime will be 1.0, 5.0, 10.0, 15.0, ...
+An LTS version is considered "supported" for 10 release cycles, or 40 weeks (~10
+months). Wasmtime will have two LTS versions at any point in time, with a new
+LTS happening every 5 releases (20 weeks, ~5 months). For ease of remembering
+what's an LTS and what isn't, all releases of Wasmtime divisible by 5 will be
+LTS version, with the exception of 1.0 being an LTS version as well. For example
+the LTS versions of Wasmtime will be 1.0, 5.0, 10.0, 15.0, ...
 
 This cadence means that users who do not want to upgrade Wasmtime monthly will
 be expected to upgrade Wasmtime at least every 10 months, likely every 5 months.
@@ -224,27 +222,27 @@ These upgrades are likely to be less "hassle-free" than each individual version
 upgrade since it will accumulate at least 5 releases worth of minor breaking
 changes.
 
-ESR versions will be maintained in separate branches of the Wasmtime repository.
-At this time it's expected that ESR versions will not needed separate branches
+LTS versions will be maintained in separate branches of the Wasmtime repository.
+At this time it's expected that LTS versions will not needed separate branches
 in separate embedding repos and tags will suffice. The branch names for the
 Wasmtime repository will be `esr-latest` and `esr-oldest` for the most recent
-and the second-most-recent ESR version.
+and the second-most-recent LTS version.
 
 ## Backports - Security fixes
 
-With an established concept of releases and ESR for Wasmtime this provides a
+With an established concept of releases and LTS for Wasmtime this provides a
 framework to discuss how security issues are handled in Wasmtime. **Security
-issues will be applied to the current version and supported ESR versions of
+issues will be applied to the current version and supported LTS versions of
 Wasmtime**.  Security issues will always be released as patch releases. The
 current version of Wasmtime at the time of the issue being made public will be
-patched in addition to the ESR versions at the time.
+patched in addition to the LTS versions at the time.
 
-For example, if Wasmtime is currently at 12.0 then the current ESR versions are
+For example, if Wasmtime is currently at 12.0 then the current LTS versions are
 5.0 and 10.0. If a security issue is identified at this time then the following
 new releases will be made available: 5.0.1, 10.0.1, 12.0.1. No other versions of
 Wasmtime will be patched, for example 11.0 will not be patched as it's neither
-ESR nor current. Additionally 1.0 will also not be patched despite it being an
-ESR version because it is no longer a supported ESR version.
+LTS nor current. Additionally 1.0 will also not be patched despite it being an
+LTS version because it is no longer a supported LTS version.
 
 Patch releases in this sense are expected to be *guaranteed* to be a low-effort
 upgrade. Wasmtime developers will ensure that 5.0.1 is API-compatible with 5.0.0
@@ -256,9 +254,9 @@ to be trivial to perform.
 
 While not as critical as security issues bugs do happen and fixes will get
 landed. **Wasmtime will adopt a policy where a bug fix is backported to the
-current version and supported ESR versions if it fixes on-by-default behavior
+current version and supported LTS versions if it fixes on-by-default behavior
 and is suitable to backport**. This should ensure that both the current version
-and ESR versions are free of known-bugs for on-by-default behavior.
+and LTS versions are free of known-bugs for on-by-default behavior.
 
 The two clauses about about bug fix backports are:
 
@@ -294,35 +292,35 @@ could be pursued beyond just tweaking minor details of the proposal:
   proposal is highly likely to alter the public API of Wasmtime in some way
   that is breaking, so such a proposal for string API-stability guarantees would
   need at least some concession for when to do breaking changes. The most likely
-  form of this would be to batch up breaking changes, perhaps in an ESR-style
+  form of this would be to batch up breaking changes, perhaps in an LTS-style
   cadence. This means, though, that new features are artificially delayed in
   Wasmtime and cannot land when they are originally implemented. Furthermore
   there would be no way to land intermediate work which would continue to be
   developed in-tree. Overall it's expected that users who want API-stability
-  from Wasmtime are sufficiently serviced with Wasmtime's ESR versions which
+  from Wasmtime are sufficiently serviced with Wasmtime's LTS versions which
   guarantee API-stability but lack new features. At this time an alternative of
   API-stable releases still getting new non-API-breaking features is seen as too
   much of a hindrance to the development of Wasmtime itself.
 
 * Technically there's nothing really stopping feature-development being
-  backported to ESR versions so long as the feature doesn't change any APIs.
+  backported to LTS versions so long as the feature doesn't change any APIs.
   This proposal, however, only indicates that security issues and bugs are
-  backported to ESR versions. This is intended to be a relatively conservative
+  backported to LTS versions. This is intended to be a relatively conservative
   starting position where we could still backport features as necessary if
   someone's willing to put in the work. The fear, though, is that the backport
-  process becomes relatively complicated and ESR backports are likely less
+  process becomes relatively complicated and LTS backports are likely less
   battle-tested than changes on `main` due to the nature of mismatch between the
-  original state of `main` and the ESR itself. To help make what is already a
+  original state of `main` and the LTS itself. To help make what is already a
   somewhat complicated process a bit simpler, this proposal states that new
-  features are not backported to ESR releases.
+  features are not backported to LTS releases.
 
-* ESR versions in theory could be dropped entirely. There aren't known users who
-  are specifically asking for ESR versions and existing production users of
+* LTS versions in theory could be dropped entirely. There aren't known users who
+  are specifically asking for LTS versions and existing production users of
   Wasmtime are likely to stay with released versions to get improvements as they
   come out. This proposal assumes, however, that there are developers we're not
-  actively hearing from who would benefit from such ESR versions and we'd like
+  actively hearing from who would benefit from such LTS versions and we'd like
   to accomodate them. If in practice it turns out that there is very little
-  usage of ESR versions we can consider dropping support for them at a later
+  usage of LTS versions we can consider dropping support for them at a later
   date when such a conclusion is made (probably another RFC).
 
 * As currently proposed Wasmtime is guaranteed to receive a new major version
@@ -335,9 +333,9 @@ could be pursued beyond just tweaking minor details of the proposal:
   * Wasmtime developers now have to keep track of breaking changes and determine
     whether any landed in the 4-week release window.
   * This makes Wasmtime's versioning less predictable.
-  * ESR is somewhat more murky in this scenario. If it still happens every 5th
+  * LTS is somewhat more murky in this scenario. If it still happens every 5th
     release we'll have to keep track of what the 5th release is, and if both
-    2.0.0 and 2.5.0 are ESR releases then it's not clear why projects would use
+    2.0.0 and 2.5.0 are LTS releases then it's not clear why projects would use
     2.0.0 as opposed to 2.6.0 if it were the current version (since everything
     is semver-compatible).
   * If the `wasmtime` Rust crate didn't have any breaking changes it doesn't
@@ -346,7 +344,7 @@ could be pursued beyond just tweaking minor details of the proposal:
 
   By having a new major version every 4 weeks it's definitely a form of "least
   common denominator" solution but it also provides a predictable versioning
-  number as well as a clear indication of what is ESR and what isn't. For these
+  number as well as a clear indication of what is LTS and what isn't. For these
   reasons it's proposed here to use a new major version every 4 weeks instead of
   gauging via breaking changes or not.
 
