@@ -266,17 +266,27 @@ The two clauses about about bug fix backports are:
   proposal would not be backported. Bug fixes related to bulk-memory, however,
   would be backported.
 
-* To be backported bug fixes also need to be suitable to backport. This is a
-  somewhat intentionally vague term to capture the idea that we'll want to
-  backport severe bug fixes no matter what, but we reserve the right to avoid
-  backporting a bug fix if the bug is minor enough and the effort of backporting
-  the patch is considered too great relative to what's being fixed.
+* To be backported bug fixes also need to be suitable to backport. Fixes such as
+  performance improvements do not fall in this category, but the main members of
+  this category are "fixes behavior to align with the official WebAssembly
+  specification". For example if a wasm module may not exhibit the behavior
+  defined in the spec for any reason, then that bugfix is candidate for a
+  backport.
 
-For now the definition of what a bug is for being backported is also
-intentionally vague. It's expected that fixes such as performance improvements
-won't be backported, but panicking on valid input for example would be
-backported. It's intended that this concept of what is backported is refined
-over time.
+## Backports - Release Process
+
+When a bug fix or a security fix is backported this means that a new release of
+Wasmtime needs to be made. **Security fixes will immediately be accompanied with
+patch releases** at all times. Bug fixes will be released on the same monthly
+cadendce as other releases.
+
+For example if a bug was discovered two weeks after 6.0 was released, then the
+bug will be backported to the 1.0 and 5.0 versions. When 7.0 is released
+Wasmtime would release 1.0.1, 5.0.1, and 7.0.0. Bug fixes, unless serious
+enough, are not released to the current version (e.g. no 6.0.1).
+
+If a bug is serious enough to warrant one, however, it will be accompanied with
+an immediate release like security fixes.
 
 # Rationale and alternatives
 [rationale-and-alternatives]: #rationale-and-alternatives
