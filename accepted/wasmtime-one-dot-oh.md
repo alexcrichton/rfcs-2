@@ -152,6 +152,82 @@ that magnitude are expected to be quite rare.
 
 [new-api]: https://github.com/bytecodealliance/rfcs/blob/main/accepted/new-api.md
 
+## What is being stabilized?
+
+Wasmtime is a relatively large project at this point with lots of components.
+Additionally not everything lives in the `wasmtime` repository itself but there
+are separate dependencies such as `wasm-tools`, `wasmtime-*` embeddings,
+`witx-bindgen`, etc. This proposal for 1.0 is only intended to cover:
+
+* The `wasmtime` Rust crate
+* The `wasmtime-*` embedding APIs
+* The Wasmtime C API
+
+Notably this proposal for stability does not include Cranelift or `wasm-tools`.
+These projects are expected to have their own story for stability. Release will
+be made for these crates to accomodate Wasmtime itself, but the release process
+here will not automatically apply to these crates otherwise. For example
+Cranelift will reach 1.0 on its own cadence and otherwise will continue to
+receive major version bumps as Wasmtime is released. The `wasm-tools` crates
+will continue to be released on-demand for consumers (including Wasmtime) and
+have their own stability (such as `wat` being very stable but `wast` being much
+less API-stable).
+
+Additionally this stability proposal does not, at this time, include the
+`wasmtime-wasi` or `wasi-common` crates. The `wasmtime-wasi` crate will
+continue to be "production ready" in the sense that they will be promoted to the
+same version number as Wasmtime itself, but they will not carry the same promise
+of general API stability that the Wasmtime crate will carry. These crates are
+likely to receive more breaking changes until at such a point in the future that
+they have become more stable (likely through another RFC).
+
+Finally, crates such as `witx-bindgen` or `wizer` which depend on Wasmtime will
+continue to be released and stabilized at their own cadence. They will be
+updated to the latest Wasmtime version as it's available but they will not
+follow the rest of the release process and procedures defined here.
+
+## What does it mean for a feature to be stable?
+
+Features enabled-by-default and implemented in Wasmtime are expected to clear at
+least a minimum threshold of stability, including:
+
+* The feature must be throughly tested in Wasmtime's CI on major platforms (at
+  this time x86\_64 and AArch64)
+
+* If the feature is for a WebAssembly upstream proposal, all spec tests must be
+  enabled and passing and the proposal must be in [stage 4 or
+  later](https://github.com/WebAssembly/meetings/blob/main/process/phases.md).
+
+* The feature must have no open questions, design concerns, or serious known
+  bugs.
+
+* The feature must have support in fuzzers and have been fuzzed for at least a
+  week. Additionally we should be confident that the fuzzing support for this
+  feature is exercising the necessary bits in Wasmtime thoroughly.
+
+* The feature is supported in the Rust API, the C API, and at least one other
+  language's embedding API.
+
+* A member of the Bytecode Alliance must be "on the hook" for maintenance of
+  this feature.
+
+Features can be implemented in-tree even if they do not meet these criteria but
+the features must either be disabled-by-default at either runtime or compile
+time. If a feature's interim implementation does not have an undue compile-time
+or runtime footprint then it can be off-by-default at runtime but compiled in by
+deafult. If, however, an in-progress feature has a significant compile-time or
+runtime footprint it must be disabled at compile-time by default.
+
+Features implemented in-tree but not currently stabilized are also subject to
+removal if there is no active progress being made on the feature. For example if
+this RFC is approved **the `lightbeam` feature of Wasmtime would be removed**.
+
+> **Note**: This RFC proposes removing `lightbeam` purely because it is not
+> production quality (it is disabled by default at compile time) and has not
+> been maintained for quite some time. The Wasmtime project is still interested
+> in pursuing alternative backends (e.g. baseline compilers), although this is
+> not being actively pursued by anyone at this time.
+
 ## Release Process and Cadence
 
 Wasmtime intends to follow in the footsteps of many other projects on the matter
