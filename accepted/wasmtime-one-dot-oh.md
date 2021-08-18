@@ -259,6 +259,14 @@ example most of these projects primarily need more maintainers to help review
 bindings for language idioms and implementation, and that's all that's necessary
 to move into tier 2.
 
+It's also worth highlighting that the intent here is to establish a deliberately
+high bar of quality we commit to. In many established open source projects, the
+level of quality, and the development and reviewing practices some or all of
+these components have and use would be deemed "good enough". And in many domains
+they might be. We're acutely aware of Wasmtime's, and more generally
+WebAssembly's use in mission- and security-critical environments, and we believe
+that we need to hold ourselves to higher standards accordingly.
+
 ## What does it mean for a feature to be stable?
 
 The tiers of support for Wasmtime are primarily concerned with the APIs that
@@ -292,7 +300,7 @@ Features can be implemented in-tree even if they do not meet these criteria but
 the features must be disabled-by-default at either runtime or compile
 time. If a feature's interim implementation does not have an undue compile-time
 or runtime footprint then it can be off-by-default at runtime but compiled in by
-deafult. If, however, an in-progress feature has a significant compile-time or
+default. If, however, an in-progress feature has a significant compile-time or
 runtime footprint it must be disabled at compile-time by default.
 
 Features implemented in-tree but not currently stabilized are also subject to
